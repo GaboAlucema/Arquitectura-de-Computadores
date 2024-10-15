@@ -1,3 +1,5 @@
+# Programa que calcula el promedio de un estudiante y determina si aprobo o no
+
 def CalcularPromedio(notas):
     suma = 0
     for i in range(len(notas)):

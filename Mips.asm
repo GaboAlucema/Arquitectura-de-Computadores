@@ -59,3 +59,18 @@ main:
 		li $v0, 2
 		mov.s $f12, $f3
 		syscall
+	
+	verificar:
+		li.s $f5, 4.0		#revisar en MARS
+		c.ls.s $f3, $f5
+		bc1t reprobar
+
+	aprobar:
+		li $v0, 4
+		la $a0, msg_aprob
+		syscall
+
+	aprobar:
+		li $v0, 4
+		la $a0, msg_reprob
+		syscall

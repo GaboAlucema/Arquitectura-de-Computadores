@@ -85,3 +85,6 @@ main:
 		li $v0, 12
 		syscall
 		beq $v0, 's', evaluar_estudiante 
+
+	li $v0, 10
+	syscall

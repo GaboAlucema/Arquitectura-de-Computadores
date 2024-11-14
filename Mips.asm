@@ -76,7 +76,7 @@ main:
 
 	otra_eva:
 		li $v0, 4
-		la $a, msg_otra
+		la $a0, msg_otra
 		syscall
 
 		li $v0, 12

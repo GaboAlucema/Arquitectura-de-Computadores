@@ -69,8 +69,10 @@ main:
 		li $v0, 4
 		la $a0, msg_aprob
 		syscall
+		j otra_eva
 
-	aprobar:
+	reprobar:
 		li $v0, 4
 		la $a0, msg_reprob
 		syscall
+		j otra_eva

@@ -45,5 +45,17 @@ main:
 		addi $t2, $t2, 1
 		
 		bne $t2, $t0, leer_notas
-		
-		
+
+	calcular_prom:
+		mtc1 $t1, $f1
+		mtc1 $t0, $f2
+		div.s $f3, $f1, $f2
+		mfc1 $t4, $f3
+
+		li $v0, 4
+		la $a0, msg_prom
+		syscall
+
+		li $v0, 2
+		mov.s $f12, $f3
+		syscall

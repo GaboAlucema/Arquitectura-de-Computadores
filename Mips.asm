@@ -76,3 +76,12 @@ main:
 		la $a0, msg_reprob
 		syscall
 		j otra_eva
+
+	otra_eva:
+		li $v0, 4
+		la $a, msg_otra
+		syscall
+
+		li $v0, 12
+		syscall
+		beq $v0, 's', evaluar_estudiante 

@@ -3,9 +3,9 @@ msg_nombre: .asciiz "\nIngrese el nombre del estudiante: "
 msg_numnotas: .asciiz "\nIngrese el numero de notas a evaluar: "
 msg_nota: .asciiz "\nIngrese la nota: "
 msg_prom: .asciiz "\nEl promedio del estudiante es: "
-msg_aprob: .asciiz "El estudiante ha aprobado.\n"
-msg_reprob: .asciiz "El estudiante ha reprobado.\n"
-msg_otra: .asciiz "Desea evaluar otro estudiante? (s/n): "
+msg_aprob: .asciiz "\nEl estudiante ha aprobado."
+msg_reprob: .asciiz "\nEl estudiante ha reprobado."
+msg_otra: .asciiz "\nDesea evaluar otro estudiante? (s/n): "
 buffer: .space 20	#espacio para el nombre del estudiante
 
 .text
@@ -30,7 +30,10 @@ main:
 		syscall
 		move $t0, $v0			# guarda el numero de notas en $t0
 		
-		li.s $f1, 0.0			# inicializar suma total de notas en $f1 para flotantes
+		li $t1, 0				# inicializar suma total de notas
+		mtc1 $t1, $f1
+		cvt.s.w $f1, $f1		
+
 		li $t2, 0				# inicializar contador de notas
 		
 	leer_notas:
@@ -47,6 +50,7 @@ main:
 
 	calcular_prom:
 		mtc1 $t0, $f2			# convierte $t0 en float y lo guarda en $t2
+		cvt.s.w $f2, $f2
 		div.s $f3, $f1, $f2		# $f3 = $f1 / $f2
 
 		li $v0, 4
@@ -58,8 +62,11 @@ main:
 		syscall
 	
 	verificar:
-		l.s $f5, 4.0			# revisar en MARS (li.s o l.s) para li de floats
-		c.ls.s $f3, $f5			# compara entre flotantes si $f3 es menor a $f5
+		li $t1, 4				# carga 4 (nota de aprobacion) en $t1
+		mtc1 $t1, $f5			# mueve $t1 a $f5
+		cvt.s.w $f5, $f5		# convierte el valor de $f5 a PF
+		
+		c.lt.s $f3, $f5			# compara entre flotantes si $f3 es menor a $f5
 		bc1t reprobar			# si la comparacion anterior es true salta a reprobar
 
 	aprobar:
